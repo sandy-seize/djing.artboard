@@ -1,0 +1,166 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(135deg, #000000 0%, #434343 100%);
+  overflow-x: hidden; 
+}
+
+header {
+  position: sticky;
+  top: 0;
+  background: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  z-index: 1000; 
+  padding: 10px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+  text-align: center;
+  color: #e0e0e0;
+  margin: 0;
+  font-size: 2.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px #00e6e6, 0 0 20px #00e6e6, 0 0 30px #00e6e6, 0 0 40px #00e6e6, 0 0 50px #00e6e6, 0 0 60px #00e6e6, 0 0 70px #00e6e6;
+  }
+  to {
+    text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff, 0 0 50px #ff00ff, 0 0 60px #ff00ff, 0 0 70px #ff00ff, 0 0 80px #ff00ff;
+  }
+}
+
+h2 {
+  text-align: center;
+  color: #c0c0c0;
+  font-size: 1.5em;
+  margin-top: 10px;
+}
+
+#soundcloud-widget {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  position: sticky;
+  top: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000; 
+  padding: 10px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  padding: 10px 20px;
+  border: 2px solid transparent;
+  border-radius: 25px;
+  margin: 0 10px;
+  transition: all 0.3s ease;
+  background: linear-gradient(to right, #ff416c, #ff4b2b);
+  box-shadow: 0 4px 15px rgba(255, 65, 108, 0.75);
+}
+
+nav a:hover {
+  border: 2px solid #ff416c;
+  background: none;
+  color: #ff416c;
+  box-shadow: 0 0 10px #ff416c, 0 0 20px #ff416c, 0 0 30px #ff416c;
+}
+
+#canvas-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - 100px); /* 캔버스 컨테이너 높이 계산 */
+  background-color: black; /* 캔버스 배경색 */
+}
+
+canvas {
+  display: block;
+  cursor: crosshair; /* 마우스 커서를 십자 모양으로 설정 */
+}
+
+#controls {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(34, 34, 34, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1000;
+  position: relative;
+  top: 20px;
+}
+
+#controls p {
+  color: white;
+  margin-right: 4px;
+  margin-left: 4px;
+}
+
+.control-button,
+.shape-button,
+.bg-color-button {
+  background: linear-gradient(45deg, #00c6ff, #0072ff);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 3px;
+  cursor: pointer;
+  border-radius: 25px;
+  transition: background 0.3s, transform 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 198, 255, 0.75);
+}
+
+.control-button:hover,
+.shape-button:hover,
+.bg-color-button:hover {
+  background: linear-gradient(45deg, #0072ff, #00c6ff);
+  transform: scale(1.1);
+}
+
+.shape-button {
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+}
+
+.shape-button:hover {
+  background: linear-gradient(45deg, #ff4b2b, #ff416c);
+}
+
+.bg-color-button {
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+}
+
+.bg-color-button:hover {
+  background: linear-gradient(45deg, #fad0c4, #ff9a9e);
+}
+
+#controls {
+  align-items: flex-start;
+}
+
+.bg-color-buttons {
+  display: flex;
+  gap: 8px;
+}

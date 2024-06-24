@@ -1,32 +1,91 @@
 let canvas;
-let drawings = []; // 모든 그리기 요소를 저장할 배열
-let shapeType = 'circle'; // 초기 도형은 원으로 설정
-
-let shapeSizeMin = 10; // 도형 최소 크기
-let shapeSizeMax = 40; // 도형 최대 크기
-let shapeSizeStep = 1; // 도형 크기 변화 단계
-
-let drawInterval = 3; // 그리기 간격 (단위: 프레임)
-let drawTimer = 0; // 타이머 변수
-
+let drawings = [];
+let shapeType = 'circle';
+let shapeSizeMin = 10;
+let shapeSizeMax = 40;
+let shapeSizeStep = 1;
+let drawInterval = 3;
+let drawTimer = 0;
 let drawIntervalSlider;
 let maxShapeSizeSlider;
 
 function setup() {
     canvas = createCanvas(windowWidth, windowHeight);
     canvas.parent('canvas-container');
-    background(0); // 배경을 검은색으로 설정
+    background(0);
 
+  // 모달 트리거 버튼 생성
+let openModalBtn = select('#open-modal-btn');
+openModalBtn.mousePressed(openModal);
+openModalBtn.class('modal-trigger'); // 모달 트리거 버튼에 클래스 추가
+
+// 모달 닫기 버튼 설정
+let closeModalBtn = select('.close-btn');
+closeModalBtn.mousePressed(closeModal);
+closeModalBtn.class('close-btn'); // 모달 닫기 버튼에 클래스 추가
+
+// 컨트롤러 생성
+createControls();
+}
+
+function draw() {
+    drawInterval = drawIntervalSlider.value();
+    shapeSizeMax = maxShapeSizeSlider.value();
+
+    for (let i = 0; i < drawings.length; i++) {
+        let shape = drawings[i];
+        shape.size += shape.sizeChange;
+        if (shape.size > shapeSizeMax || shape.size < shapeSizeMin) {
+            shape.sizeChange *= -1;
+        }
+
+        fill(255, 20);
+        stroke(255);
+        fill(shape.color);
+
+        switch (shape.type) {
+            case 'circle':
+                ellipse(shape.x, shape.y, shape.size, shape.size);
+                break;
+            case 'square':
+                rect(shape.x - shape.size / 2, shape.y - shape.size / 2, shape.size, shape.size);
+                break;
+            case 'pentagon':
+                drawPolygon(shape.x, shape.y, 5, shape.size / 2);
+                break;
+            case 'hexagon':
+                drawPolygon(shape.x, shape.y, 6, shape.size / 2);
+                break;
+        }
+    }
+
+    if (frameCount % drawInterval === 0 && mouseIsPressed) {
+        let point = {
+            x: mouseX,
+            y: mouseY,
+            type: shapeType,
+            size: random(shapeSizeMin, shapeSizeMax),
+            sizeChange: random(-shapeSizeStep, shapeSizeStep),
+            color: color(random(255), random(255), random(255))
+        };
+        drawings.push(point);
+    }
+}
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
+
+function resetCanvas() {
+    drawings = [];
+    background(0);
+}
+
+function createControls() {
     // 컨트롤 박스 생성
-    let controls = createDiv().id('controls');
-    controls.style('background-color', 'rgba(34, 34, 34, 0.8)');
-    controls.style('padding', '10px');
-    controls.style('border-radius', '5px');
-    controls.style('z-index', '1000');
-    controls.style('position', 'fixed');
-    controls.position(20, 20);
+    let controls = select('#controls');
+    controls.html('');
 
-    // 리셋 버튼 생성
     let resetButton = createButton('Reset');
     resetButton.parent(controls);
     resetButton.mousePressed(resetCanvas);
@@ -66,72 +125,7 @@ function setup() {
     createShapeButtons(controls);
 }
 
-function draw() {
-    // 그리기 간격 조절
-    drawInterval = drawIntervalSlider.value();
-
-    // 최대 도형 크기 조절
-    shapeSizeMax = maxShapeSizeSlider.value();
-
-    for (let i = 0; i < drawings.length; i++) {
-        let shape = drawings[i];
-
-        // 도형 크기 변경
-        shape.size += shape.sizeChange;
-        if (shape.size > shapeSizeMax || shape.size < shapeSizeMin) {
-            shape.sizeChange *= -1; // 크기 변화 반전
-        }
-
-        // 그림자 설정
-        fill(255, 20); // 흰색의 그림자, 불투명도 20
-        stroke(255); // 흰색 외곽선
-
-        // 색상 랜덤 설정
-        fill(shape.color);
-
-        // 도형 그리기
-        switch (shape.type) {
-            case 'circle':
-                ellipse(shape.x, shape.y, shape.size, shape.size); // 타원 그리기
-                break;
-            case 'square':
-                rect(shape.x - shape.size / 2, shape.y - shape.size / 2, shape.size, shape.size); // 사각형 그리기
-                break;
-            case 'pentagon':
-                drawPolygon(shape.x, shape.y, 5, shape.size / 2); // 오각형 그리기
-                break;
-            case 'hexagon':
-                drawPolygon(shape.x, shape.y, 6, shape.size / 2); // 육각형 그리기
-                break;
-        }
-    }
-
-    // 그리기 간격 조절
-    if (frameCount % drawInterval === 0 && mouseIsPressed) {
-        // 마우스가 클릭된 상태에서만 도형을 그리도록
-        let point = {
-            x: mouseX,
-            y: mouseY,
-            type: shapeType,
-            size: random(shapeSizeMin, shapeSizeMax),
-            sizeChange: random(-shapeSizeStep, shapeSizeStep),
-            color: color(random(255), random(255), random(255))
-        };
-        drawings.push(point);
-    }
-}
-
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-}
-
-function resetCanvas() {
-    drawings = []; // 그리기 배열을 비우기
-    background(0); // 배경을 검은색으로 다시 설정
-}
-
 function createShapeButtons(parentElement) {
-    // 도형 선택 버튼 생성
     let circleButton = createButton('Circle');
     circleButton.parent(parentElement);
     circleButton.mousePressed(function() {
@@ -170,4 +164,14 @@ function drawPolygon(x, y, sides, radius) {
         vertex(px, py);
     }
     endShape(CLOSE);
+}
+
+function openModal() {
+    let modal = select('#controls-modal');
+    modal.style('display', 'block');
+}
+
+function closeModal() {
+    let modal = select('#controls-modal');
+    modal.style('display', 'none');
 }

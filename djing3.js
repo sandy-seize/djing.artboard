@@ -4,27 +4,34 @@ let shapeType = 'circle'; // 초기 도형은 원으로 설정
 let circleSize = 50;
 let lineLength = 100;
 
-let bgColorPicker; // 배경 색상을 선택할 버튼
+let bgColor; // 배경 색상 변수
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent('canvas-container');
   bgColor = color(0, 100, 200); // 초기 배경 색상 설정 (블루와 핑크 계열)
 
-  // 컨트롤 박스 생성
-  let controls = createDiv().id('controls');
+  // 배경 색상 선택 버튼 생성
+  createBgColorButtons();
+
+  // 도형 선택 버튼 생성
+  createShapeButtons();
+
+  // 모달 트리거 버튼 생성
+  let openModalBtn = createButton('Open Modal');
+  openModalBtn.parent('controls');
+  openModalBtn.mousePressed(openModal);
+  openModalBtn.class('modal-trigger');
+
+  // 컨트롤 박스 스타일 설정
+  let controls = select('#controls');
   controls.style('background-color', 'rgba(34, 34, 34, 0.8)');
   controls.style('padding', '10px');
   controls.style('border-radius', '5px');
-  controls.style('z-index', '1000');
+  controls.style('z-index', '1000'); // z-index 값을 높여 다른 요소보다 위에 위치
   controls.style('position', 'fixed');
-  controls.position(20, 20);
-
-  // 배경 색상 선택 버튼 생성
-  createBgColorButtons(controls);
-
-  // 도형 선택 버튼 생성
-  createShapeButtons(controls);
+  controls.style('bottom', '20px'); // 하단 위치 지정
+  controls.style('right', '20px'); // 우측 위치 지정
 }
 
 function draw() {
@@ -63,27 +70,31 @@ function windowResized() {
 }
 
 // 배경 색상 선택 버튼 생성 함수
-function createBgColorButtons(parentElement) {
+function createBgColorButtons() {
+  let controls = select('#controls');
+
   let blueButton = createButton('Blue');
-  blueButton.parent(parentElement);
+  blueButton.parent(controls);
   blueButton.mousePressed(function() {
     bgColor = color(0, 100, 200);
   });
   blueButton.class('bg-color-button');
 
-  let pinkButton = createButton('Pink');
-  pinkButton.parent(parentElement);
+  let pinkButton = createButton('Yellow');
+  pinkButton.parent(controls);
   pinkButton.mousePressed(function() {
-    bgColor = color(255, 100, 200);
+    bgColor = color(255, 255, 139);
   });
   pinkButton.class('bg-color-button');
 }
 
 // 도형 선택 버튼 생성 함수
-function createShapeButtons(parentElement) {
+function createShapeButtons() {
+  let controls = select('#controls');
+
   // 원 선택 버튼 생성
   let circleButton = createButton('Circle');
-  circleButton.parent(parentElement);
+  circleButton.parent(controls);
   circleButton.mousePressed(function() {
     shapeType = 'circle';
   });
@@ -91,7 +102,7 @@ function createShapeButtons(parentElement) {
 
   // 사각형 선택 버튼 생성
   let squareButton = createButton('Square');
-  squareButton.parent(parentElement);
+  squareButton.parent(controls);
   squareButton.mousePressed(function() {
     shapeType = 'square';
   });
@@ -99,7 +110,7 @@ function createShapeButtons(parentElement) {
 
   // 다각형 선택 버튼 생성
   let polygonButton = createButton('Polygon');
-  polygonButton.parent(parentElement);
+  polygonButton.parent(controls);
   polygonButton.mousePressed(function() {
     shapeType = 'polygon';
   });
@@ -116,4 +127,14 @@ function drawPolygon(x, y, sides, radius) {
     vertex(px, py);
   }
   endShape(CLOSE);
+}
+
+function openModal() {
+  let modal = select('#controls-modal');
+  modal.style('display', 'block');
+}
+
+function closeModal() {
+  let modal = select('#controls-modal');
+  modal.style('display', 'none');
 }

@@ -20,17 +20,14 @@ function setup() {
     backgroundColor = color(0);
     background(backgroundColor);
 
-    // 모달 트리거 버튼 생성
 let openModalBtn = select('#open-modal-btn');
 openModalBtn.mousePressed(openModal);
-openModalBtn.class('modal-trigger'); // 모달 트리거 버튼에 클래스 추가
+openModalBtn.class('modal-trigger'); 
 
-// 모달 닫기 버튼 설정
 let closeModalBtn = select('.close-btn');
 closeModalBtn.mousePressed(closeModal);
-closeModalBtn.class('close-btn'); // 모달 닫기 버튼에 클래스 추가
+closeModalBtn.class('close-btn'); 
 
-// 컨트롤러 생성
 createControls();
 }
     

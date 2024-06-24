@@ -14,17 +14,17 @@ function setup() {
     canvas.parent('canvas-container');
     background(0);
 
-  // 모달 트리거 버튼 생성
+
 let openModalBtn = select('#open-modal-btn');
 openModalBtn.mousePressed(openModal);
-openModalBtn.class('modal-trigger'); // 모달 트리거 버튼에 클래스 추가
+openModalBtn.class('modal-trigger'); 
 
-// 모달 닫기 버튼 설정
+
 let closeModalBtn = select('.close-btn');
 closeModalBtn.mousePressed(closeModal);
-closeModalBtn.class('close-btn'); // 모달 닫기 버튼에 클래스 추가
+closeModalBtn.class('close-btn'); 
 
-// 컨트롤러 생성
+
 createControls();
 }
 
@@ -82,7 +82,7 @@ function resetCanvas() {
 }
 
 function createControls() {
-    // 컨트롤 박스 생성
+   
     let controls = select('#controls');
     controls.html('');
 
@@ -91,7 +91,7 @@ function createControls() {
     resetButton.mousePressed(resetCanvas);
     resetButton.class('control-button');
 
-    // 첫 번째 그룹: Slow, Slider, Fast
+
     let group1 = createDiv().parent(controls).style('margin-bottom', '10px');
     group1.style('display', 'flex');
     group1.style('align-items', 'center');
@@ -106,7 +106,7 @@ function createControls() {
     let fastLabel = createP('Slow').style('color', 'white').style('margin-left', '10px');
     fastLabel.parent(group1);
 
-    // 두 번째 그룹: Small, Slider, Big
+    
     let group2 = createDiv().parent(controls).style('margin-bottom', '10px');
     group2.style('display', 'flex');
     group2.style('align-items', 'center');
@@ -121,7 +121,7 @@ function createControls() {
     let bigLabel = createP('Big').style('color', 'white').style('margin-left', '10px');
     bigLabel.parent(group2);
 
-    // 도형 선택 버튼 생성
+   
     createShapeButtons(controls);
 }
 

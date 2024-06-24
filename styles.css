@@ -7,7 +7,7 @@ body {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
   background: linear-gradient(135deg, #000000 0%, #434343 100%);
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }
 
 header {
@@ -15,7 +15,7 @@ header {
   top: 0;
   background: rgba(0, 0, 0, 0.8);
   width: 100%;
-  z-index: 1000; 
+  z-index: 1000;
   padding: 10px 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
@@ -58,7 +58,7 @@ nav {
   margin-bottom: 20px;
   position: sticky;
   top: 0;
-  z-index: 1000; 
+  z-index: 1000;
   padding: 10px 0;
 }
 
@@ -85,24 +85,22 @@ nav a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black; /* 캔버스 배경색 */
-  position: fixed; /* 화면에 고정 */
+  background-color: black; 
+  position: fixed; 
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1; /* 다른 요소 위에 캔버스가 나타나도록 설정 */
+  z-index: -1; /
 }
 
-/* 캔버스 크기를 디바이스 크기에 맞추기 위한 스타일 */
+
 canvas {
   display: block;
-  width: 100vw; /* 전체 뷰포트 너비 */
-  height: 100vh; /* 전체 뷰포트 높이 */
-  object-fit: cover; /* 캔버스가 화면에 꽉 차도록 설정 */
+  width: 100vw; 
+  height: 100vh; 
+  object-fit: cover; 
 }
-
-
 
 .modal-trigger {
   background: linear-gradient(45deg, #00c6ff, #0072ff);
@@ -165,6 +163,7 @@ canvas {
   z-index: 1000;
   position: relative;
   top: 20px;
+  align-items: flex-start;
 }
 
 #controls p {
@@ -176,7 +175,6 @@ canvas {
 .control-button,
 .shape-button,
 .bg-color-button {
-  background: linear-gradient(45deg, #00c6ff, #0072ff);
   border: none;
   color: white;
   padding: 8px 16px;
@@ -191,11 +189,12 @@ canvas {
   box-shadow: 0 4px 15px rgba(0, 198, 255, 0.75);
 }
 
-.control-button:hover,
-.shape-button:hover,
-.bg-color-button:hover {
+.control-button {
+  background: linear-gradient(45deg, #00c6ff, #0072ff);
+}
+
+.control-button:hover {
   background: linear-gradient(45deg, #0072ff, #00c6ff);
-  transform: scale(1.1);
 }
 
 .shape-button {
@@ -214,11 +213,21 @@ canvas {
   background: linear-gradient(45deg, #fad0c4, #ff9a9e);
 }
 
-#controls {
-  align-items: flex-start;
-}
-
 .bg-color-buttons {
   display: flex;
   gap: 8px;
+}
+
+@media (max-width: 380px) {
+  h1 {
+    font-size: 1.8em;
+  }
+
+  .control-button,
+  .shape-button,
+  .bg-color-button,
+  .modal-trigger {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
 }
